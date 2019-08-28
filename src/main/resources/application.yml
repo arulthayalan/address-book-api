@@ -1,0 +1,16 @@
+api:
+  title: Address Book
+  description:  Maintain Address books contains mobile contact
+  version: 1.0
+
+server:
+  servlet:
+    context-path: /address-book-api
+
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  datasource:
+    url:  jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    transaction-isolation: TRANSACTION_READ_COMMITTED
