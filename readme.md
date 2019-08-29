@@ -82,9 +82,9 @@ Response body:
 ```
 ### GET /addressbooks/contacts/[queryfilter]
 
-Example: http://localhost:8080/address-book-api/addressbooks/UNIQUE
+Example: http://localhost:8080/address-book-api/addressbooks/contacts/UNIQUE
 
-Example: http://localhost:8080/address-book-api/addressbooks/ALL
+Example: http://localhost:8080/address-book-api/addressbooks/contacts/ALL
 
 Response body:
 
