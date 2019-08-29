@@ -88,7 +88,7 @@ Example: http://localhost:8080/address-book-api/addressbooks/contacts/ALL
 
 Response body:
 
-    ```
+```
     {
       "data": {
         "phoneContacts": [
@@ -107,7 +107,7 @@ Response body:
         ]
       }
     }
-    ```
+```
 
 
     
