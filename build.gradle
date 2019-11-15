@@ -1,4 +1,3 @@
-
 buildscript {
 
     repositories {
@@ -13,10 +12,10 @@ buildscript {
 
 plugins {
     id 'net.ltgt.apt' version '0.8'
+    id "com.palantir.docker" version "0.22.1"
 }
 
 apply plugin: 'java'
-apply plugin: 'war'
 apply plugin: 'groovy'
 apply plugin: 'org.springframework.boot'
 apply plugin: "io.spring.dependency-management"
@@ -31,9 +30,19 @@ repositories {
     mavenCentral()
 }
 
- springBoot {
-     mainClassName = 'au.com.xyz.addressbook.Application'
- }
+springBoot {
+    mainClassName = 'au.com.xyz.addressbook.Application'
+}
+
+jar {
+    baseName = 'address-book-api'
+    version = project.version
+}
+
+bootJar {
+    baseName = 'address-book-api'
+    version = project.version
+}
 
 sourceSets {
     functionalTest {
@@ -53,12 +62,11 @@ dependencies {
     implementation 'org.mapstruct:mapstruct-jdk8:1.3.0.Final'
     apt 'org.mapstruct:mapstruct-processor:1.3.0.Final'
 
-    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     runtime 'com.h2database:h2:1.4.199'
 
     testImplementation 'org.codehaus.groovy:groovy-all:2.4.1'
     testImplementation 'org.spockframework:spock-core:1.1-groovy-2.4'
-    testImplementation  'org.spockframework:spock-spring:1.1-groovy-2.4'
+    testImplementation 'org.spockframework:spock-spring:1.1-groovy-2.4'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     testImplementation 'io.rest-assured:rest-assured:4.0.0'
@@ -73,4 +81,11 @@ task functionalTest(type: Test) {
     testClassesDirs = sourceSets.functionalTest.output
     classpath = sourceSets.functionalTest.runtimeClasspath
     binResultsDir = file("$testResultsDir/functionalTest")
+}
+
+docker {
+    name "${project.group}/${bootJar.baseName}"
+    files bootJar
+    buildArgs ([JAR_FILE: "${bootJar.baseName}-${bootJar.version}.jar"])
+    noCache true
 }
